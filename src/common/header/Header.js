@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import PropTypes from 'prop-types';
 
 const customStyles = {
     content: {
@@ -27,11 +29,20 @@ const TabContainer = function (props) {
     );
 }
 
+TabContainer.propTypes = {
+    children: PropTypes.node.isRequired
+};
+
 
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = { ModalIsOpen: false, value: 0 };
+        this.state = {
+            ModalIsOpen: false,
+            value: 0,
+            username: "",
+            usernameRequired: "dispNone"
+        };
     }
 
     openModalHandler = () => {
@@ -46,6 +57,14 @@ class Header extends Component {
         this.setState({ value });
     }
 
+    btnClickhandler = (event) => {
+        this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) : this.setState({ usernameRequired: "dispNone" });
+    }
+
+    userNameChangeHandler = (e) => {
+        this.setState({ username: e.target.value });
+    }
+
     render() {
         return (
             <div className="masthead">
@@ -56,18 +75,21 @@ class Header extends Component {
                         <Tab label="LOGIN" />
                         <Tab label="REGISTER" />
                     </Tabs>
-                    <TabContainer>
-                        <FormControl required>
-                            <InputLabel htmlFor="username">Username</InputLabel>
-                            <Input type="text" id="username" aria-describedby="enter username" />
-                        </FormControl>
-                        <br/><br/>
-                        <FormControl required>
-                            <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input type="password" id="password" aria-describedby="enter password" />
-                        </FormControl><br/><br/>
-                        <Button variant="contained" color="primary">LOGIN</Button>
-                    </TabContainer>
+                    {this.state.value === 0 &&
+                        <TabContainer>
+                            <FormControl required>
+                                <InputLabel htmlFor="username">Username</InputLabel>
+                                <Input type="text" id="username" username={this.state.username} aria-describedby="enter username" onChange={this.userNameChangeHandler} />
+                                <FormHelperText className={this.state.usernameRequired}><span className="red">Required</span></FormHelperText>
+                            </FormControl>
+                            <br /><br />
+                            <FormControl required>
+                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <Input type="password" id="password" aria-describedby="enter password" />
+                            </FormControl><br /><br />
+                            <Button variant="contained" color="primary" onClick={this.btnClickhandler}>LOGIN</Button>
+                        </TabContainer>
+                    }
                 </Modal>
             </div>
         );
