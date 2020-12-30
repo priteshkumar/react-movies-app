@@ -41,12 +41,21 @@ class Header extends Component {
             ModalIsOpen: false,
             value: 0,
             username: "",
-            usernameRequired: "dispNone"
+            usernameRequired: "dispNone",
+            password: "",
+            passwordRequired: "dispNone"
         };
     }
 
     openModalHandler = () => {
-        this.setState({ ModalIsOpen: true, value: 0, username: "", usernameRequired: "dispNone" });
+        this.setState({
+            ModalIsOpen: true,
+            value: 0,
+            username: "",
+            usernameRequired: "dispNone",
+            password: "",
+            passwordRequired: "dispNone"
+        });
     }
 
     closeModalHandler = () => {
@@ -60,10 +69,15 @@ class Header extends Component {
     btnClickhandler = (event) => {
         console.log(this.state.username);
         this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) : this.setState({ usernameRequired: "dispNone" });
+        this.state.password === "" ? this.setState({ passwordRequired: "dispBlock" }) : this.setState({ passwordRequired: "dispNone" });
     }
 
     userNameChangeHandler = (e) => {
         this.setState({ username: e.target.value });
+    }
+
+    passwordChangeHandler = (e) => {
+        this.setState({ password: e.target.value });
     }
 
     render() {
@@ -81,12 +95,13 @@ class Header extends Component {
                             <FormControl required>
                                 <InputLabel htmlFor="username">Username</InputLabel>
                                 <Input type="text" id="username" username={this.state.username} aria-describedby="enter username" onChange={this.userNameChangeHandler} />
-                                <FormHelperText className={this.state.usernameRequired}><span className="red">Required</span></FormHelperText>
+                                <FormHelperText className={this.state.usernameRequired}><span className="red">required</span></FormHelperText>
                             </FormControl>
                             <br /><br />
                             <FormControl required>
                                 <InputLabel htmlFor="password">Password</InputLabel>
-                                <Input type="password" id="password" aria-describedby="enter password" />
+                                <Input type="password" id="password" password={this.state.password} aria-describedby="enter password" onChange={this.passwordChangeHandler} />
+                                <FormHelperText className={this.state.passwordRequired}><span className="red">required</span></FormHelperText>
                             </FormControl><br /><br />
                             <Button variant="contained" color="primary" onClick={this.btnClickhandler}>LOGIN</Button>
                         </TabContainer>
