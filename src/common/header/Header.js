@@ -46,7 +46,7 @@ class Header extends Component {
     }
 
     openModalHandler = () => {
-        this.setState({ ModalIsOpen: true });
+        this.setState({ ModalIsOpen: true, value: 0, username: "", usernameRequired: "dispNone" });
     }
 
     closeModalHandler = () => {
@@ -58,6 +58,7 @@ class Header extends Component {
     }
 
     btnClickhandler = (event) => {
+        console.log(this.state.username);
         this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) : this.setState({ usernameRequired: "dispNone" });
     }
 
