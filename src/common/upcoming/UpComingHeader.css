@@ -1,0 +1,12 @@
+.upcoming-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff7f7f;
+    padding:8px;
+}
+
+.upcoming-text {
+    font-size: 150%;
+    font-weight: 400;
+}
